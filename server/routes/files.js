@@ -61,7 +61,7 @@ router.post("/upload", upload.single("file"), async (req, res) => {
 
     uploadStream.on("finish", () => {
       const fileId = uploadStream.id.toString();
-      const backendUrl = process.env.BASE_URL || "http://localhost:5000";
+      const backendUrl = process.env.BASE_URL;
       const downloadUrl = `${backendUrl}/api/files/download/${fileId}`;
 
       return res.status(200).json({
