@@ -9,7 +9,7 @@ export default function DownloadPage(){
     if (!token) return setStatus("no-token");
     // just redirect browser to backend direct download endpoint
     // so the response is an attachment
-    window.location.href = `http://localhost:5000/api/files/download/${token}`;
+    window.location.href = `https://file-share-backend-lek4.onrender.com/api/files/download/${token}`;
   }, [token]);
 
   if (status === "no-token") return (

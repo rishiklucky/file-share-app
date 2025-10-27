@@ -15,7 +15,7 @@ export default function UploadPage() {
       const fd = new FormData();
       fd.append("file", file);
       fd.append("days", days);
-      const res = await axios.post("http://localhost:5000/api/files/upload", fd, {
+      const res = await axios.post("https://file-share-backend-lek4.onrender.com/api/files/upload", fd, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setResult(res.data); // ✅ this contains { fileId, filename, downloadUrl }
