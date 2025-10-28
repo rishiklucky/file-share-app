@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+// import "./index.css"; // ensure CSS is imported
 
 export default function UploadPage() {
   const [file, setFile] = useState(null);
@@ -9,16 +10,18 @@ export default function UploadPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!file) return alert("Choose a file.");
+    if (!file) return alert("Choose a file first!");
     setLoading(true);
     try {
       const fd = new FormData();
       fd.append("file", file);
       fd.append("days", days);
-      const res = await axios.post("https://file-share-backend-lek4.onrender.com/api/files/upload", fd, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      setResult(res.data); // ✅ this contains { fileId, filename, downloadUrl }
+      const res = await axios.post(
+        "https://file-share-backend-lek4.onrender.com/api/files/upload",
+        fd,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+      setResult(res.data);
     } catch (err) {
       console.error(err);
       alert("Upload failed");
@@ -28,52 +31,43 @@ export default function UploadPage() {
   };
 
   return (
-    <div className="flex items-center justify-center py-12 px-4">
-      <div className="bg-white p-8 rounded shadow w-full max-w-md">
-        <h2 className="text-xl font-semibold mb-4">Upload a file</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input type="file" onChange={e => setFile(e.target.files[0])} />
-          <select
-            value={days}
-            onChange={e => setDays(e.target.value)}
-            className="w-full border p-2 rounded"
-          >
-            {[1, 2, 3, 4, 5, 6, 7].map(d => (
-              <option key={d} value={d}>
-                {d} day{d > 1 ? "s" : ""}
-              </option>
-            ))}
-          </select>
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded"
-            disabled={loading}
-          >
-            {loading ? "Uploading..." : "Upload"}
-          </button>
-        </form>
+    <div className="upload-card">
+      <h2 style={{color:"brown"}}>Upload Your File</h2>
+      <form className="upload-form" onSubmit={handleSubmit}>
+        <label style={{color:"teal"}}>Choose File</label>
+        <input style={{backgroundColor:"transparent",border:"2",borderStyle:"solid",borderColor:"teal"}} type="file" onChange={(e) => setFile(e.target.files[0])} />
 
-        {result && (
-          <div className="mt-4 p-3 bg-gray-50 rounded">
-            <div className="text-green-600 font-semibold">✅ Uploaded!</div>
-            <div className="mt-2">
-              <div>📄 <strong>File name:</strong> {result.filename}</div>
-              <div>🆔 <strong>File ID:</strong> {result.fileId}</div>
-              <div>
-                🔗 <strong>Download Link:</strong>{" "}
-                <a
-                  className="text-blue-600 underline"
-                  href={result.downloadUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {result.downloadUrl}
-                </a>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+        <label style={{color:"teal"}}>Expiry (in days)</label>
+        <select style={{backgroundColor:"transparent",border:"2",borderStyle:"solid",borderColor:"teal"}} value={days} onChange={(e) => setDays(e.target.value)}>
+          {[1, 2, 3, 4, 5, 6, 7].map((d) => (
+            <option  key={d} value={d}>
+              {d} day{d > 1 ? "s" : ""}
+            </option>
+          ))}
+        </select>
+
+        <button style={{color:"teal",backgroundColor:"peachpuff",border:"2",borderStyle:"solid",borderColor:"teal"}} type="submit" disabled={loading}>
+          {loading ? "Uploading..." : "Upload"}
+        </button>
+      </form>
+
+      {result && (
+        <div className="upload-result">
+          <div>✅ <strong>Upload Successful!</strong></div>
+          <p>
+            <strong>File Name :</strong> {result.filename}
+          </p>
+          {/* <p>
+            <strong>File ID:</strong> {result.fileId}
+          </p> */}
+          <p>
+            <strong>Link :</strong>{" "}
+            <a href={result.downloadUrl} target="_blank" rel="noreferrer">
+              {result.downloadUrl}
+            </a>
+          </p>
+        </div>
+      )}
     </div>
   );
 }
