@@ -2,9 +2,7 @@
   --primary-color: #2563eb;
   --primary-hover: #1e40af;
   --bg-color: #f4f6f8;
-  --card-bg: #ffffff;
   --text-dark: #1f2937;
-  --text-light: #6b7280;
   --success: #16a34a;
   --border-radius: 12px;
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -12,13 +10,12 @@
 }
 
 body {
-  font-family: 'Courier New', Courier, monospace;
-  background-image: url("../public/bg.jpg");
-  background-size: cover;        /* Makes the image fill the screen */
-  background-position: center;   /* Centers the image */
-  background-repeat: no-repeat;  /* Prevents repeating */
-  background-attachment: fixed;  /* Keeps image fixed when scrolling (optional aesthetic) */
-  
+  font-family:'Courier New', Courier, monospace;
+  background-image: url("/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   margin: 0;
   display: flex;
   align-items: center;
@@ -27,98 +24,104 @@ body {
   color: var(--text-dark);
 }
 
+/* Center content using Bootstrap container */
+.upload-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 1rem;
+}
 
-/* Card container */
+/* Translucent card */
 .upload-card {
-  background: rgba(255, 255, 255, 0.15); /* translucent white */
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  padding: 2rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 3px solid teal;
   border-radius: var(--border-radius);
-  border-color: teal;
   box-shadow: var(--shadow);
+  padding: 2rem;
   width: 100%;
   max-width: 600px;
   transition: transform var(--transition);
-  color: #fff; /* ensures text contrast */
+  color:teal;
 }
 
 .upload-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
 }
 
-
-/* Title */
+/* Headings */
 .upload-card h2 {
   text-align: center;
-  margin-bottom: 1rem;
-  color: var(--primary-color);
+  color:chocolate;
+  margin-bottom: 1.5rem;
 }
 
-/* Form inputs */
+/* Input styling */
 .upload-form input[type="file"],
 .upload-form select {
-  width: 100%;
-  padding: 0.75rem;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #d1d5db;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: teal;
+  border: 2px solid teal;
   border-radius: 8px;
-  font-size: 0.95rem;
-  color: var(--text-dark);
-  background: #fff;
-  transition: border var(--transition);
+  padding: 0.75rem;
+  width: 100%;
 }
 
-.upload-form input:focus,
-.upload-form select:focus {
-  border-color: var(--primary-color);
-  outline: none;
+.upload-form select option {
+  color: teal;
+  background-color: peachpuff;
 }
+
 
 /* Button */
 .upload-form button {
   width: 100%;
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 0.8rem;
-  font-size: 1rem;
+  background-color: rgb(219, 130, 66);
+  color: teal;
+  font-weight: 600;
+  border: 2px solid teal;
   border-radius: 8px;
-  cursor: pointer;
-  transition: background var(--transition);
+  padding: 0.8rem;
+  transition: 0.3s;
 }
 
 .upload-form button:hover {
-  background: var(--primary-hover);
-}
-
-.upload-form button:disabled {
-  background: #9ca3af;
-  cursor: not-allowed;
+  background-color: teal;
+  color: chocolate;
 }
 
 /* Upload result box */
 .upload-result {
   margin-top: 1.5rem;
-  background: #f9fafb;
-  border-left: 4px solid var(--success);
+  background: transparent;
+  border: 2px;
+  border-style: solid;
+  border-color: teal;
   border-radius: 8px;
   padding: 1rem;
   font-size: 0.9rem;
-}
-
-.upload-result strong {
-  color: var(--text-dark);
+  color: #333;
 }
 
 .upload-result a {
   color: var(--primary-color);
-  text-decoration: none;
+  word-break: break-all;
 }
 
 .upload-result a:hover {
   text-decoration: underline;
+}
+
+/* Responsive tweaks */
+@media (max-width: 576px) {
+  .upload-card {
+    padding: 1.5rem;
+  }
+
+  .upload-card h2 {
+    font-size: 1.3rem;
+  }
 }

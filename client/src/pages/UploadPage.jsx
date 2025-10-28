@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-// import "./index.css"; // ensure CSS is imported
+import "../index.css"
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 export default function UploadPage() {
   const [file, setFile] = useState(null);
@@ -31,43 +33,54 @@ export default function UploadPage() {
   };
 
   return (
-    <div className="upload-card">
-      <h2 style={{color:"brown"}}>Upload Your File</h2>
-      <form className="upload-form" onSubmit={handleSubmit}>
-        <label style={{color:"teal"}}>Choose File</label>
-        <input style={{backgroundColor:"transparent",border:"2",borderStyle:"solid",borderColor:"teal"}} type="file" onChange={(e) => setFile(e.target.files[0])} />
+    <div className="container-fluid upload-wrapper">
+      <div className="upload-card text-center">
+        <h2>Upload Your File</h2>
 
-        <label style={{color:"teal"}}>Expiry (in days)</label>
-        <select style={{backgroundColor:"transparent",border:"2",borderStyle:"solid",borderColor:"teal"}} value={days} onChange={(e) => setDays(e.target.value)}>
-          {[1, 2, 3, 4, 5, 6, 7].map((d) => (
-            <option  key={d} value={d}>
-              {d} day{d > 1 ? "s" : ""}
-            </option>
-          ))}
-        </select>
+        <form className="upload-form" onSubmit={handleSubmit}>
+          <div className="mb-3 text-start">
+            <label className="form-label fw-semibold">Choose File</label>
+            <input
+              type="file"
+              className="form-control"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+          </div>
 
-        <button style={{color:"teal",backgroundColor:"peachpuff",border:"2",borderStyle:"solid",borderColor:"teal"}} type="submit" disabled={loading}>
-          {loading ? "Uploading..." : "Upload"}
-        </button>
-      </form>
+          <div className="mb-3 text-start">
+            <label className="form-label fw-semibold">Expiry (in days)</label>
+            <select
+              value={days}
+              onChange={(e) => setDays(e.target.value)}
+              className="form-select"
+            >
+              {[1, 2, 3, 4, 5, 6, 7].map((d) => (
+                <option key={d} value={d}>
+                  {d} day{d > 1 ? "s" : ""}
+                </option>
+              ))}
+            </select>
+          </div>
 
-      {result && (
-        <div className="upload-result">
-          <div>✅ <strong>Upload Successful!</strong></div>
-          <p>
-            <strong>File Name :</strong> {result.filename}
-          </p>
-          {/* <p>
-            <strong>File ID:</strong> {result.fileId}
-          </p> */}
-          <p>
-            <strong>Link :</strong>{" "}
-            <a href={result.downloadUrl} target="_blank" rel="noreferrer">
-              {result.downloadUrl}
-            </a>
-          </p>
-        </div>
-      )}
+          <button type="submit" className="btn w-100 fw-semibold" disabled={loading}>
+            {loading ? "Uploading..." : "Upload"}
+          </button>
+        </form>
+
+        {result && (
+          <div className="upload-result mt-4 text-start">
+            <div> <strong>Upload Successful !</strong>✅</div>
+            &nbsp;
+            <p><strong>File Name:</strong> {result.filename}</p>
+            <p>
+              <strong>Download Link:</strong>{" "}
+              <a href={result.downloadUrl} target="_blank" rel="noreferrer">
+                {result.downloadUrl}
+              </a>
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
